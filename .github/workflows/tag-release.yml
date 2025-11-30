@@ -1,0 +1,41 @@
+name: 🏷️ Auto Tag & Release
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+permissions:
+  contents: write # REQUIRED for creating tags and releases
+
+jobs:
+  tag-and-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name:  Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # REQUIRED to access git history for version calculation
+
+      # 1. Calculate the Next Version based on commits (feat, fix, BREAKING)
+      - name:  Calculate Next Version
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.2
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          default_bump: patch
+          release_branches: main
+          pre_release_branches: develop
+          append_to_pre_release_tag: rc
+
+      # 2. Create the GitHub Release & Changelog
+      - name:  Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
+          prerelease: ${{ github.ref == 'refs/heads/develop' }} # True if develop
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
