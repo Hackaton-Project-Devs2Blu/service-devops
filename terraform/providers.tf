@@ -21,7 +21,8 @@ provider "aws" {
     tags = {
       Project   = "Hackathon-Devs2Blu"
       ManagedBy = "Terraform"
-
+      Environment = "Prod" 
+      Service     = "Hackathon-Platform"
     }
   }
 }
