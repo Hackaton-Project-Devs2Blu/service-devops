@@ -4,6 +4,10 @@ resource "aws_ecs_cluster" "main" {
     name  = "containerInsights"
     value = "enabled"
   }
+  tags = {
+    Name        = "${var.project_name}-cluster-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_iam_role" "execution_role" {
@@ -28,6 +32,10 @@ resource "aws_cloudwatch_log_group" "logs" {
   for_each          = toset(["java", "csharp", "flutter"])
   name              = "/ecs/${var.project_name}-${each.key}-${var.environment}"
   retention_in_days = 1
+  tags = {
+    Name        = "${var.project_name}-cluster-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_ecs_task_definition" "java" {
@@ -52,6 +60,10 @@ resource "aws_ecs_task_definition" "java" {
       }
     }
   }])
+  tags = {
+    Name        = "${var.project_name}-container-java-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_ecs_service" "java" {
@@ -88,6 +100,10 @@ resource "aws_ecs_service" "java" {
       desired_count    
     ]
   }
+   tags = {
+    Name        = "${var.project_name}-service-java-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_appautoscaling_target" "java_target" {
@@ -96,6 +112,10 @@ resource "aws_appautoscaling_target" "java_target" {
   resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.java.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
+  tags = {
+    Name        = "${var.project_name}-asg-java-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_appautoscaling_policy" "java_cpu_policy" {
@@ -138,6 +158,10 @@ resource "aws_ecs_task_definition" "csharp" {
       }
     }
   }])
+  tags = {
+    Name        = "${var.project_name}-container-csharp-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_ecs_service" "csharp" {
@@ -173,14 +197,22 @@ resource "aws_ecs_service" "csharp" {
       desired_count    
     ]
   }
+  tags = {
+    Name        = "${var.project_name}-service-csharp-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
-resource "aws_appautoscaling_target" "csharp_target " {
+resource "aws_appautoscaling_target" "csharp_target" {
   max_capacity       = 5  
   min_capacity       = 1  
   resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.csharp.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
+  tags = {
+    Name        = "${var.project_name}-asg-csharp-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_appautoscaling_policy" "csharp_cpu_policy" {
@@ -221,8 +253,12 @@ resource "aws_ecs_task_definition" "flutter" {
         "awslogs-region"        = var.aws_region
         "awslogs-stream-prefix" = "ecs"
       }
-    }
-  }])
+      }
+    }])
+  tags = {
+    Name        = "${var.project_name}-task-flutter-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_ecs_service" "flutter" {
@@ -258,6 +294,10 @@ resource "aws_ecs_service" "flutter" {
       desired_count    
     ]
   }
+  tags = {
+    Name        = "${var.project_name}-app-flutter-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_appautoscaling_target" "flutter_target" {
@@ -266,6 +306,10 @@ resource "aws_appautoscaling_target" "flutter_target" {
   resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.flutter.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
+  tags = {
+    Name        = "${var.project_name}-asg-flutter-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_appautoscaling_policy" "flutter_cpu_policy" {

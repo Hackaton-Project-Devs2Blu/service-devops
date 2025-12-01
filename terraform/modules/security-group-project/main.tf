@@ -6,6 +6,7 @@ resource "aws_security_group" "project_sg" {
 
   tags = {
     Name = var.name_sg
+    Environment = "Prod"
   }
 }
 
