@@ -21,5 +21,5 @@ output "private_subnets" {
 
 output "url_aplicacao" {
   description = "Acesse a aplicação aqui (Load Balancer) "
-  value       = "http://${module.alb.dns_name}"
+  value       = "http://${module.alb.main.dns_name}"
 }
