@@ -1,5 +1,9 @@
 resource "aws_ecs_cluster" "main" {
   name = "${var.project_name}-cluster-${var.environment}"
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
 
 resource "aws_iam_role" "execution_role" {
