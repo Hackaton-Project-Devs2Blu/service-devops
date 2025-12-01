@@ -19,12 +19,19 @@ provider "aws" {
   region = "us-east-1"
   default_tags {
     tags = {
-      Project   = "Hackathon-Devs2Blu"
-      ManagedBy = "Terraform"
-
+      Project     = "Hackathon-Devs2Blu"
+      ManagedBy   = "Terraform"
+      Application = "Chatbot-SEDEAD"
+      Environment = "Prod"          
+      Service     = "Hackathon-Platform" 
+      CostCenter  = "SEDEAD-Blumenau" 
+      Owner       = "Squad-Devs2Blu"  
+      Team        = "DevOps-Team"     
+      DataClass   = "Confidential"    
     }
+   }
   }
-}
+
 
 data "aws_subnets" "default" {
   filter {
@@ -83,6 +90,10 @@ resource "aws_security_group" "emergency_sg" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  tags = {
+    Name = "PLAN-B-EMERGENCY-sg"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_instance" "plan_b" {
@@ -93,7 +104,8 @@ resource "aws_instance" "plan_b" {
   vpc_security_group_ids = [aws_security_group.emergency_sg.id]
 
   tags = {
-    Name = "PLAN-B-EMERGENCY-TURBO"
+    Name = "PLAN-B-EMERGENCY"
+    Environment = "Prod"
   }
   user_data = <<-EOF
               #!/bin/bash

@@ -1,11 +1,27 @@
 provider "aws" {
   region = "us-west-2" 
+  default_tags {
+    tags = {
+      Project     = "Hackathon-Devs2Blu"
+      ManagedBy   = "Terraform"
+      Application = "Chatbot-SEDEAD"
+      Environment = "Prod"          
+      Service     = "Hackathon-Platform" 
+      CostCenter  = "SEDEAD-Blumenau" 
+      Owner       = "Squad-Devs2Blu"  
+      Team        = "DevOps-Team"     
+      DataClass   = "Confidential"    
+    }
+  }
 }
 
 resource "aws_s3_bucket" "terraform_state" {
-
   bucket = "hackathon-devs2blu-terraform-state-1533" 
   force_destroy = true 
+  tags = {
+    Name = "Hackathon-terraform-locks"
+    Environment = "Prod"
+    }
 }
 
 resource "aws_s3_bucket_versioning" "versioning" {
@@ -25,7 +41,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encrypt" {
 }
 
 resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "hackathon-terraform-locks"
+  name         = "Hackathon-terraform-locks"
   billing_mode = "PAY_PER_REQUEST"
   hash_key     = "LockID"
 
@@ -33,6 +49,10 @@ resource "aws_dynamodb_table" "terraform_locks" {
     name = "LockID"
     type = "S"
   }
+  tags = {
+    Name = "Hackathon-terraform-locks"
+    Environment = "Prod"
+    }
 }
 
 output "bucket_name" {
