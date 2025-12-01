@@ -6,6 +6,7 @@ resource "aws_security_group" "security_group_lb" {
 
   tags = {
     Name = var.name_sg
+    Environment = "Prod"
   }
 }
 
