@@ -1,0 +1,19 @@
+version: 0.1
+resource_usage:
+
+  module.alb.aws_lb.main:
+    monthly_new_connections: 10000 
+    monthly_processed_bytes_gb: 50 
+    monthly_rule_evaluations: 100000
+
+  module.ecs.aws_ecs_service.java:
+    monthly_cpu_credit_hours: 730 
+    operating_system: Linux
+  
+  module.ecs.aws_ecs_service.csharp:
+    monthly_cpu_credit_hours: 730
+    operating_system: Linux
+
+  module.ecs.aws_ecs_service.flutter:
+    monthly_cpu_credit_hours: 730
+    operating_system: Linux 

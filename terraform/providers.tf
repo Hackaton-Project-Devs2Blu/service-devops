@@ -16,13 +16,22 @@ terraform {
   }
 }
 provider "aws" {
+
   region = var.aws_region
+
   default_tags {
     tags = {
-      Project   = "Hackathon-Devs2Blu"
-      ManagedBy = "Terraform"
-      Environment = "Prod" 
-      Service     = "Hackathon-Platform"
+      Project     = "Hackathon-Devs2Blu"
+      ManagedBy   = "Terraform"
+      Application = "Chatbot-SEDEAD"
+      Environment = "Prod"          
+      Service     = "Hackathon-Platform" 
+      CostCenter  = "SEDEAD-Blumenau" 
+      Owner       = "Squad-Devs2Blu"  
+      Team        = "DevOps-Team"     
+      DataClass   = "Confidential"    
     }
   }
+  
 }
+
