@@ -31,7 +31,7 @@ jobs:
                               --usage-file ./terraform/infracost-usage.yml
 
       - name: 💬 Post Cost Comment
-        uses: infracost/actions/comment@v3
+        uses: infracost/actions/comment@v2
         with:
           path: /tmp/infracost.json
           behavior: update 
