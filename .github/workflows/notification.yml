@@ -1,0 +1,29 @@
+name: 📢 Discord Notifier
+
+on:
+  workflow_run:
+    workflows: ["🛡️ DevSecOps & Governance"] 
+    types:
+      - completed
+
+jobs:
+  on-completion:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🔔 Send Discord Notification
+        uses: sarisia/actions-status-discord@v1
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          status: ${{ github.event.workflow_run.conclusion == 'success' && 'Success' || 'Failure' }}
+          
+          title: "DevSecOps Pipeline: ${{ github.event.workflow_run.conclusion }}"
+          description: "O pipeline de segurança rodou na branch **${{ github.event.workflow_run.head_branch }}**."
+          
+          # Lógica do GIF (Triste se falhou, Feliz se passou)
+          image: ${{ github.event.workflow_run.conclusion == 'failure' && 'https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExajBxbjB2dXU0eG0zNmpxM3dlcXgyM2k1NWN3b3dlNG1udGFzcHdmZSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/zvBuF2oYRErVS/giphy.gif' || 'https://media.giphy.com/media/xT5LMHxhOfscxPfIfm/giphy.gif' }}
+          
+          # Lógica da Cor (Vermelho se falhou, Verde se passou)
+          color: ${{ github.event.workflow_run.conclusion == 'failure' && '0xff0000' || '0x00ff00' }}
+          
+          # Link para clicar e ver o erro no GitHub
+          url: ${{ github.event.workflow_run.html_url }}
