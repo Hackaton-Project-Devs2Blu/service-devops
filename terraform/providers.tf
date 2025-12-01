@@ -5,7 +5,7 @@ terraform {
       version = "5.46"
     }
   }
-  required_version = "1.13.1"
+  required_version = "~>1.13"
 
   backend "s3" {
     bucket         = "hackathon-devs2blu-terraform-state-1533"
