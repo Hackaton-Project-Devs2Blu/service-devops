@@ -55,7 +55,7 @@ service-devops/
  Pré-requisitos e Ferramentas
 Para garantir a estabilidade do tfstate e a compatibilidade dos módulos, utilizamos versões estritas:
 
-Terraform: v1.13.1 (Obrigatório)
+Terraform: versão maior que 1.13 
 
 AWS Provider: 5.46 
 
