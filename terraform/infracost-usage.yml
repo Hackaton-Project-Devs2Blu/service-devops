@@ -16,4 +16,4 @@ resource_usage:
 
   module.ecs.aws_ecs_service.flutter:
     monthly_cpu_credit_hours: 730
-    operating_system: Linux
+    operating_system: Linux 
