@@ -1,14 +1,13 @@
 version: 0.1
 resource_usage:
-  # Se o seu módulo de Load Balancer chama "alb"
-  module.alb.aws_lb.this:
+
+  module.alb.aws_lb.main:
     monthly_new_connections: 10000 
     monthly_processed_bytes_gb: 50 
     monthly_rule_evaluations: 100000
 
-  # ADICIONE 'module.ecs.' ANTES DOS SERVIÇOS
   module.ecs.aws_ecs_service.java:
-    monthly_cpu_credit_hours: 730
+    monthly_cpu_credit_hours: 730 
     operating_system: Linux
   
   module.ecs.aws_ecs_service.csharp:
@@ -17,4 +16,4 @@ resource_usage:
 
   module.ecs.aws_ecs_service.flutter:
     monthly_cpu_credit_hours: 730
-    operating_system: Linux
+    operating_system: Linux 
