@@ -18,3 +18,8 @@ output "private_subnets" {
   description = "Private Subnets IDs (For RDS)"
   value       = module.vpc.private_subnets
 }
+
+output "url_aplicacao" {
+  description = "Acesse a aplicação aqui (Load Balancer)"
+  value       = "http://${module.alb.dns_name}"
+}
