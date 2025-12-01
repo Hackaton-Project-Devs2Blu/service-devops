@@ -3,7 +3,9 @@ Este repositório contém a Infraestrutura como Código (IaC) do projeto, provis
 
 🏛️ Arquitetura da Solução
 
-![imagem da infraestrutura técnica]([image-url](https://github.com/Hackaton-Project-Devs2Blu/service-devops/blob/develop/terraform/Arquitetura%20Hackaton.png))
+![Arquitetura da Solução](service-devops\terraform\ArquiteturaHackaton.png)
+
+
 A infraestrutura foi desenhada seguindo os pilares do AWS Well-Architected Framework, priorizando Eficiência de Performance, Segurança e Otimização de Custos.
 
 1. Computação: Estratégia de Spot Instances
