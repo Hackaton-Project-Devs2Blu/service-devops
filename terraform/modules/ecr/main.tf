@@ -15,7 +15,7 @@ resource "aws_ecr_repository" "repositorys" {
   }
 }
 
-resource "aws_ecr_lifecycle_policy" "cleanup" {
+resource "aws_ecr_lifecycle_policy" "cleanup " {
   for_each = toset(var.repository_names)
 
   repository = aws_ecr_repository.repositorys[each.key].name
