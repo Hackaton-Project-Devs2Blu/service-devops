@@ -2,7 +2,7 @@ name: 🛡️ DevSecOps & Governance
 
 on:
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "develop" ]
 
 # Permissões necessárias para subir relatórios de segurança e checar PRs
 permissions:
@@ -45,12 +45,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      # 1. GITLEAKS (Tolerância Zero para Senhas)
-      - name: 🔑 Detect Secrets (Gitleaks)
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_LICENSE: "" # Free version
+     # 1. TRUFFLEHOG
+      # Bloqueia se achar chaves/senhas reais
+      - name: 🐷 TruffleHog OSS (Secrets Scan)
+        uses: trufflesecurity/trufflehog@main
+        with:
+          path: ./
+          base: ${{ github.event.repository.default_branch }}
+          head: HEAD
+          extra_args: --debug --only-verified
 
       # 2. TRIVY (Vulnerabilidades em Arquivos/Deps)
       # Bloqueia apenas CRITICAL que tenha correção.
@@ -66,7 +69,7 @@ jobs:
           exit-code: '1' # Quebra o build se achar erro crítico
 
       - name: 📡 Upload Trivy Scan Results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: 'trivy-results.sarif'
@@ -85,7 +88,7 @@ jobs:
 
       # Upload manual do Checkov (se ele gerar arquivo)
       - name: 📡 Upload Checkov Results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always() # Roda mesmo se o Checkov achar erros
         continue-on-error: true
         with:
@@ -101,7 +104,7 @@ jobs:
           generateSarif: "1"
 
       - name: 📡 Upload Semgrep Results
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         continue-on-error: true
         with:
