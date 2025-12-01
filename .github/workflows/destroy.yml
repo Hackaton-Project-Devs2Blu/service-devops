@@ -1,0 +1,38 @@
+name: 💤 Nightly Sleep (Scale to Zero)
+
+on:
+  workflow_dispatch: # Botão de Pânico (Parar cobrança agora)
+  schedule:
+    - cron: '0 1 * * *' # 01:00 UTC = 22:00 BRT
+
+permissions:
+  id-token: write
+  contents: read
+
+env:
+  AWS_REGION: us-west-2
+  CLUSTER_NAME: hackathon-project-cluster-hackathon
+
+jobs:
+  sleep-mode:
+    name: Scale Down to Zero
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔐 Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }} 
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: 💤 Hibernate Services
+        run: |
+          echo "Colocando os serviços para dormir (Economia de Energia)..."
+          # Java
+          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service service-java --desired-count 0
+          # C#
+          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service service-csharp --desired-count 0
+          # Flutter
+          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service app-flutter --desired-count 0
+          
+          echo "Boa noite! 😴 Custo computacional zerado."
