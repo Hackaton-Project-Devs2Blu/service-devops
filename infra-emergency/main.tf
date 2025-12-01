@@ -5,11 +5,11 @@ terraform {
       version = "5.46"
     }
   }
-  required_version = "1.13.1"
+  required_version = "1.13.5"
 
   backend "s3" {
     bucket         = "hackathon-devs2blu-terraform-state-1533"
-    key            = "hackathon/terraform.tfstate"
+    key            = "emergency/terraform.tfstate"
     region         = "us-west-2"
     dynamodb_table = "hackathon-terraform-locks"
     encrypt        = true
@@ -71,6 +71,12 @@ resource "aws_security_group" "emergency_sg" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+  ingress {
+    from_port   = 5000
+    to_port     = 5000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
   egress {
     from_port   = 0
     to_port     = 0
@@ -123,7 +129,7 @@ resource "aws_instance" "plan_b" {
                 csharp:
                   build: ./csharp-repo 
                   ports:
-                    - "5000:80"
+                    - "5000:5000"
                   restart: always
 
                 flutter:
@@ -139,7 +145,19 @@ resource "aws_instance" "plan_b" {
               EOF
 }
 
-output "public_ip" {
-  value = aws_instance.plan_b.public_ip
-  description = "Acesse sua aplicação aqui: http://<IP>"
+output "z_acesso_navegador" {
+  description = "Link direto para a aplicação"
+  value       = "http://${aws_instance.plan_b.public_ip}"
+}
+output "z_acesso_java" {
+  description = "Link direto para a aplicação"
+  value       = "http://${aws_instance.plan_b.public_ip}:8080"
+}
+output "z_acesso_csharp" {
+  description = "Link direto para a aplicação"
+  value       = "http://${aws_instance.plan_b.public_ip}:5000"
+}
+output "z_acesso_ssh" {
+  description = "Comando para acessar o terminal"
+  value       = "ssh -i hackaton-bryan.pem ubuntu@${aws_instance.plan_b.public_ip}"
 }
