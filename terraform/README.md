@@ -3,7 +3,7 @@ Este repositório contém a Infraestrutura como Código (IaC) do projeto, provis
 
 🏛️ Arquitetura da Solução
 
-![Arquitetura da Solução](service-devops\terraform\ArquiteturaHackaton.png)
+![Arquitetura da Solução](./ArquiteturaHackaton.png)
 
 
 A infraestrutura foi desenhada seguindo os pilares do AWS Well-Architected Framework, priorizando Eficiência de Performance, Segurança e Otimização de Custos.
