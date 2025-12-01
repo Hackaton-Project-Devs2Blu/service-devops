@@ -1,7 +1,7 @@
 ☁️ Cloud Infrastructure | Hackathon Project
 Este repositório contém a Infraestrutura como Código (IaC) do projeto, provisionando um ambiente de microsserviços escalável, observável e otimizado para custos na AWS.
 
-🏛️ Arquitetura da Solução
+🏛️ Arquitetura da Solução 
 
 ![Arquitetura da Solução](./ArquiteturaHackaton.png)
 
@@ -55,7 +55,7 @@ service-devops/
  Pré-requisitos e Ferramentas
 Para garantir a estabilidade do tfstate e a compatibilidade dos módulos, utilizamos versões estritas:
 
-Terraform: v1.13.1 (Obrigatório)
+Terraform: versão maior que 1.13 
 
 AWS Provider: 5.46 
 
