@@ -18,7 +18,7 @@ module "vpc" {
   enable_dns_support   = true
 
   tags = {
-    Environment = "Hackathon"
+    Environment = "Prod"
     Project     = "Infra-Platform"
   }
 }

@@ -10,7 +10,7 @@ resource "aws_lb" "main" {
 
   tags = {
     Name        = "${var.project_name}-alb-${var.environment}"
-    Environment = var.environment
+    Environment = "Prod"
   }
 }
 
@@ -30,6 +30,10 @@ resource "aws_lb_target_group" "java" {
     healthy_threshold   = 2
     unhealthy_threshold = 3
   }
+  tags = {
+    Name        = "${var.project_name}-alb-tg-java-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 # Grupo para o C# (.NET)
@@ -43,6 +47,10 @@ resource "aws_lb_target_group" "csharp" {
   health_check {
     path    = "/health"
     matcher = "200"
+  }
+  tags = {
+    Name        = "${var.project_name}-alb-tg-csharp-${var.environment}"
+    Environment = "Prod"
   }
 }
 
@@ -58,6 +66,10 @@ resource "aws_lb_target_group" "flutter" {
     path    = "/"
     matcher = "200"
   }
+  tags = {
+    Name        = "${var.project_name}-alb-tg-flutter-${var.environment}"
+    Environment = "Prod"
+  }
 }
 
 resource "aws_lb_listener" "http" {
@@ -68,6 +80,10 @@ resource "aws_lb_listener" "http" {
   default_action {
     type             = "forward"
     target_group_arn = aws_lb_target_group.flutter.arn
+  }
+  tags = {
+    Name        = "${var.project_name}-alb-lt-flutter-${var.environment}"
+    Environment = "Prod"
   }
 }
 
@@ -87,7 +103,12 @@ resource "aws_lb_listener_rule" "java_rule" {
       values = ["/api/java/*"]
     }
   }
+    tags = {
+    Name        = "${var.project_name}-alb-lt-java-${var.environment}"
+    Environment = "Prod"
+  }
 }
+
 
 resource "aws_lb_listener_rule" "csharp_rule" {
   listener_arn = aws_lb_listener.http.arn
@@ -102,5 +123,9 @@ resource "aws_lb_listener_rule" "csharp_rule" {
     path_pattern {
       values = ["/api/csharp/*"]
     }
+  }
+  tags = {
+    Name        = "${var.project_name}-alb-lt-csharp-${var.environment}"
+    Environment = "Prod"
   }
 }

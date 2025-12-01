@@ -11,13 +11,13 @@ resource "aws_ecr_repository" "repositorys" {
 
   tags = {
     Name        = "${each.key}-${var.environment}"
-    Environment = var.environment
+    Environment = "Prod"
   }
 }
 
-resource "aws_ecr_lifecycle_policy" "cleanup " {
+resource "aws_ecr_lifecycle_policy" "cleanup" {
   for_each = toset(var.repository_names)
-
+  
   repository = aws_ecr_repository.repositorys[each.key].name
 
   policy = jsonencode({
