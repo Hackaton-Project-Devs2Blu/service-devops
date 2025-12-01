@@ -2,13 +2,12 @@ name: 💰 FinOps Check (Infracost)
 
 on:
   pull_request:
-    branches: [ "main", "develop" ]
+    branches: [ "develop" ]
     paths:
-      - 'terraform/**'
+      - 'terraform/**' 
 permissions:
   contents: read
   pull-requests: write 
-
 jobs:
   infracost:
     name: Estimate Cost
@@ -31,7 +30,10 @@ jobs:
                               --usage-file ./terraform/infracost-usage.yml
 
       - name: 💬 Post Cost Comment
-        uses: infracost/actions/comment@v2
-        with:
-          path: /tmp/infracost.json
-          behavior: update 
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          infracost comment github --path /tmp/infracost.json \
+                                   --repo $GITHUB_REPOSITORY \
+                                   --pull-request ${{ github.event.pull_request.number }} \
+                                   --behavior update
