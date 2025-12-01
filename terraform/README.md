@@ -1,7 +1,7 @@
 ☁️ Cloud Infrastructure | Hackathon Project
 Este repositório contém a Infraestrutura como Código (IaC) do projeto, provisionando um ambiente de microsserviços escalável, observável e otimizado para custos na AWS.
 
-🏛️ Arquitetura da Solução
+🏛️ Arquitetura da Solução 
 
 ![Arquitetura da Solução](service-devops\terraform\ArquiteturaHackaton.png)
 
