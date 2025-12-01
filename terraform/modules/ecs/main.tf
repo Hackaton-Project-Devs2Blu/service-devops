@@ -54,7 +54,7 @@ resource "aws_ecs_service" "java" {
   name            = "service-java"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.java.arn
-  
+  desired_count   = 1
 
   capacity_provider_strategy {
     base              = 0
@@ -77,8 +77,13 @@ resource "aws_ecs_service" "java" {
     container_name   = "java-container"
     container_port   = 8080
   }
-
-  lifecycle { ignore_changes = [task_definition] }
+  health_check_grace_period_seconds = 120
+  lifecycle {
+    ignore_changes = [
+      task_definition, 
+      desired_count    
+    ]
+  }
 }
 
 resource "aws_appautoscaling_target" "java_target" {
@@ -158,7 +163,12 @@ resource "aws_ecs_service" "csharp" {
     container_port   = 8080
   }
 
-  lifecycle { ignore_changes = [task_definition] }
+  lifecycle {
+    ignore_changes = [
+      task_definition, 
+      desired_count    
+    ]
+  }
 }
 
 resource "aws_appautoscaling_target" "csharp_target" {
@@ -238,7 +248,12 @@ resource "aws_ecs_service" "flutter" {
     container_port   = 80
   }
 
-  lifecycle { ignore_changes = [task_definition] }
+  lifecycle {
+    ignore_changes = [
+      task_definition, 
+      desired_count    
+    ]
+  }
 }
 
 resource "aws_appautoscaling_target" "flutter_target" {
