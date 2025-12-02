@@ -38,6 +38,10 @@ data "aws_subnets" "default" {
     name   = "vpc-id"
     values = ["vpc-06786ee7f7a163059"]
   }
+  tags = {
+    Name = "PLAN-B-EMERGENCY-sg"
+    Environment = "Prod"
+  }
 }
 
 data "aws_ami" "ubuntu" {
