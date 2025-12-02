@@ -80,4 +80,4 @@ Este módulo provisiona uma instância EC2 em uma AZ diferente.
 Um script user_data clona os repositórios, compila as aplicações e sobe a stack via Docker Compose em ~7 minutos.
 
 🏆 Time Devs2Blu Hackathon
-Infraestrutura pensada com muito amor e café.
+Infraestrutura pensada com muito amor e café. 
