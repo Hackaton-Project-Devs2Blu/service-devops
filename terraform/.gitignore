@@ -3,5 +3,6 @@
 *.tfstate
 *.tfstate.backup
 tfplan
-*.tfvars
-*.tfvars.json
+*.*.tfvars
+*.*.tfvars.json
+values.auto.tfvars
