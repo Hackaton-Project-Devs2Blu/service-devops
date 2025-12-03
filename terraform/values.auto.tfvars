@@ -6,3 +6,4 @@ vpc_name         = "hackathon-vpc"
 vpc_cidr         = "10.0.0.0/16"
 project_name     = "hackathon-project"
 repository_names = ["service-java", "service-csharp", "app-flutter"]
+db_name = "db_ecs_fargate"
