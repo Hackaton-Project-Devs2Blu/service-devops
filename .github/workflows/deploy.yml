@@ -1,11 +1,11 @@
-name: 🏗️ Infra Deploy & Wake Up (07:00 BRT)
+name: 🏗️ Infra Deploy(17:00 BRT)
 
 on:
   push:
     branches: [ "main" ]
   workflow_dispatch: # Botão Manual
   schedule:
-    - cron: '0 10 * * *' # 10:00 UTC = 07:00 BRT
+    - cron: '0 20 * * *' # 10:00 UTC = 07:00 BRT
 
 permissions:
   id-token: write
@@ -43,6 +43,9 @@ jobs:
       - name: ⚙️ Terraform Init
         run: terraform init
       - name: 🚀 Terraform Apply
+        env:
+         TF_VAR_db_username: ${{ secrets.TF_DB_USERNAME }}
+         TF_VAR_db_password: ${{ secrets.TF_DB_PASSWORD }}
         run: terraform apply -auto-approve -input=false
       - name: ⏰ Wake Up Services (Scale to 1)
         run: |
