@@ -45,7 +45,10 @@ resource "aws_ecs_task_definition" "java" {
   cpu                      = 1024
   memory                   = 2048
   execution_role_arn       = aws_iam_role.execution_role.arn
-
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64" 
+  }
   container_definitions = jsonencode([{
     name         = "java-container"
     image        = "${var.ecr_repo_urls["service-java"]}:latest"
@@ -71,7 +74,7 @@ resource "aws_ecs_service" "java" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.java.arn
   desired_count   = 1
-
+  
   capacity_provider_strategy {
     base              = 0
     weight            = 100
@@ -142,6 +145,11 @@ resource "aws_ecs_task_definition" "csharp" {
   cpu                      = 1024
   memory                   = 2048
   execution_role_arn       = aws_iam_role.execution_role.arn
+
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64" 
+  }
 
   container_definitions = jsonencode([{
     name         = "csharp-container"
@@ -239,7 +247,10 @@ resource "aws_ecs_task_definition" "flutter" {
   cpu                      = 256
   memory                   = 512
   execution_role_arn       = aws_iam_role.execution_role.arn
-
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64" 
+  }
   container_definitions = jsonencode([{
     name         = "flutter-container"
     image        = "${var.ecr_repo_urls["app-flutter"]}:latest"
