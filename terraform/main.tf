@@ -73,3 +73,33 @@ module "ecs" {
   target_group_csharp_arn  = module.alb.target_group_csharp_arn
   target_group_flutter_arn = module.alb.target_group_flutter_arn
 }
+
+module "rds" {
+  source = "./modules/rds"
+
+  project_name = var.project_name
+  environment  = var.environment
+  db_name      = var.db_name
+  db_username  = var.db_username
+  db_password  = var.db_password
+  db_subnet_group_name   = module.subnet-db.db_subnet_group_name
+  vpc_security_group_ids = [module.security-group-rds.security_group_id]
+}
+
+module "subnet-db" {
+  source = "./modules/subnet-db"
+
+  project_name = var.project_name 
+  environment  = var.environment
+  private_subnet_ids = module.vpc.private_subnets
+
+}
+
+module "security-group-rds" {
+  source = "./modules/security-group-rds"
+  
+  project_name = var.project_name
+  environment = var.environment
+  vpc_id = module.vpc.vpc_id
+  security_group_id_ecs = module.security_group_ecs.security_group_id_ecs
+}
