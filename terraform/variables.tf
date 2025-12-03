@@ -40,3 +40,17 @@ variable "project_name" {
   description = "Name for the Project"
   type        = string
 }
+
+# RDS Variables
+variable "db_name" {
+  description = "The name of the database to create"
+  type        = string
+}
+variable "db_username" {
+  description = "The username for the database"
+  type        = string
+}
+variable "db_password" {
+  description = "The password for the database"
+  type        = string
+}

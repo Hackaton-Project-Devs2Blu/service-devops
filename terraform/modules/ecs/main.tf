@@ -42,10 +42,13 @@ resource "aws_ecs_task_definition" "java" {
   family                   = "java-task-${var.environment}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 512
-  memory                   = 1024
+  cpu                      = 1024
+  memory                   = 2048
   execution_role_arn       = aws_iam_role.execution_role.arn
-
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64" 
+  }
   container_definitions = jsonencode([{
     name         = "java-container"
     image        = "${var.ecr_repo_urls["service-java"]}:latest"
@@ -71,14 +74,13 @@ resource "aws_ecs_service" "java" {
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.java.arn
   desired_count   = 1
-
+  
   capacity_provider_strategy {
     base              = 0
     weight            = 100
     capacity_provider = "FARGATE_SPOT"
   }
 
-  # Zero Downtime Deployment
   deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 200
 
@@ -130,9 +132,9 @@ resource "aws_appautoscaling_policy" "java_cpu_policy" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
 
-    target_value       = 70.0 # Tenta manter a CPU média em 70%
-    scale_in_cooldown  = 60   # Espera 60s antes de diminuir (evita efeito sanfona)
-    scale_out_cooldown = 60   # Espera 60s antes de aumentar de novo
+    target_value       = 70.0 
+    scale_in_cooldown  = 60   
+    scale_out_cooldown = 60   
   }
 }
 
@@ -140,9 +142,14 @@ resource "aws_ecs_task_definition" "csharp" {
   family                   = "csharp-task-${var.environment}"
   network_mode             = "awsvpc"
   requires_compatibilities = ["FARGATE"]
-  cpu                      = 256
-  memory                   = 512
+  cpu                      = 1024
+  memory                   = 2048
   execution_role_arn       = aws_iam_role.execution_role.arn
+
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64" 
+  }
 
   container_definitions = jsonencode([{
     name         = "csharp-container"
@@ -227,9 +234,9 @@ resource "aws_appautoscaling_policy" "csharp_cpu_policy" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
 
-    target_value       = 70.0 # Tenta manter a CPU média em 70%
-    scale_in_cooldown  = 60   # Espera 60s antes de diminuir (evita efeito sanfona)
-    scale_out_cooldown = 60   # Espera 60s antes de aumentar de novo
+    target_value       = 70.0 
+    scale_in_cooldown  = 60   
+    scale_out_cooldown = 60   
   }
 }
 
@@ -240,7 +247,10 @@ resource "aws_ecs_task_definition" "flutter" {
   cpu                      = 256
   memory                   = 512
   execution_role_arn       = aws_iam_role.execution_role.arn
-
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "ARM64" 
+  }
   container_definitions = jsonencode([{
     name         = "flutter-container"
     image        = "${var.ecr_repo_urls["app-flutter"]}:latest"
@@ -323,8 +333,8 @@ resource "aws_appautoscaling_policy" "flutter_cpu_policy" {
       predefined_metric_type = "ECSServiceAverageCPUUtilization"
     }
 
-    target_value       = 70.0 # Tenta manter a CPU média em 70%
-    scale_in_cooldown  = 60   # Espera 60s antes de diminuir (evita efeito sanfona)
-    scale_out_cooldown = 60   # Espera 60s antes de aumentar de novo
+    target_value       = 70.0 
+    scale_in_cooldown  = 60   
+    scale_out_cooldown = 60   
   }
 }

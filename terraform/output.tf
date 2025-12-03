@@ -18,3 +18,12 @@ output "private_subnets" {
   description = "Private Subnets IDs (For RDS)"
   value       = module.vpc.private_subnets
 }
+
+output "rds_endpoint_address" {
+  description = "ENDPOINT PARA CONEXÃO COM O BANCO"
+  value       = module.rds.db_host
+}
+
+output "rds_port" {
+  value = module.rds.db_port
+}
