@@ -17,7 +17,13 @@ resource "aws_vpc_security_group_ingress_rule" "allow_lb_to_project" {
   to_port                      = 8080
   ip_protocol                  = "tcp"
 }
-
+resource "aws_vpc_security_group_ingress_rule" "allow_80" {
+  security_group_id            = aws_security_group.ecs.id
+  referenced_security_group_id = var.security_group_id_lb
+  from_port                    = 80  
+  to_port                      = 80
+  ip_protocol                  = "tcp"
+}
 resource "aws_vpc_security_group_egress_rule" "allow_all_traffic_ipv4" {
   security_group_id = aws_security_group.project_sg.id
   cidr_ipv4         = "0.0.0.0/0"
