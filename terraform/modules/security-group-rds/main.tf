@@ -8,10 +8,10 @@ resource "aws_security_group" "security_group_rds" {
     Environment = "Prod"
   }
 }
-resource "aws_vpc_security_group_ingress_rule" "allow_ecs" {
-  security_group_id = aws_security_group.security_group_rds.id
-  referenced_security_group_id = var.security_group_id_ecs  
-  description = "Permite entrada TCP 5432 vindo apenas do cluster ECS"
+resource "aws_vpc_security_group_ingress_rule" "allow_ecs_to_rds" {
+  description                  = "Libera acesso do ECS (Java/C#) ao Banco de Dados"
+  security_group_id            = aws_security_group.security_group_rds.id 
+  referenced_security_group_id = var.security_group_id_ecs            
   from_port   = 5432
   to_port     = 5432
   ip_protocol = "tcp"
