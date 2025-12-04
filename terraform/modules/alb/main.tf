@@ -23,7 +23,7 @@ resource "aws_lb_target_group" "java" {
   target_type = "ip"
 
   health_check {
-    path                = "/actuator/health"
+    path                = "/api/java/actuator/health"
     matcher             = "200"
     interval            = 30
     timeout             = 5
