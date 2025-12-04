@@ -59,3 +59,8 @@ variable "db_host" {
   type        = string
   sensitive   = true
 }
+variable "gemini_api_key" {
+  description = "The Google Gemini API key"
+  type        = string
+  sensitive   = true
+}
