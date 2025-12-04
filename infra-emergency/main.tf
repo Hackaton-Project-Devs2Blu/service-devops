@@ -16,7 +16,7 @@ terraform {
   }
 }
 provider "aws" {
-  region = "us-east-1"
+  region = "us-west-2"
   default_tags {
     tags = {
       Project     = "Hackathon-Devs2Blu"
@@ -32,33 +32,19 @@ provider "aws" {
    }
   }
 
-
-data "aws_subnets" "default" {
-  filter {
-    name   = "vpc-id"
-    values = ["vpc-06786ee7f7a163059"]
-  }
-  tags = {
-    Name = "PLAN-B-EMERGENCY-sg"
-    Environment = "Prod"
-  }
-}
-
-data "aws_ami" "ubuntu" {
+data "aws_ami" "ubuntu_graviton" {
   most_recent = true
-  owners      = ["099720109477"]
-
+  owners      = ["099720109477"] 
   filter {
     name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
+    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-arm64-server-*"]
   }
-
   filter {
     name   = "virtualization-type"
     values = ["hvm"]
   }
+    architecture = "arm64"
 }
-
 resource "aws_security_group" "emergency_sg" {
   name        = "hackathon-emergency-sg-build"
   description = "Plano B - Build on Box"
@@ -99,13 +85,12 @@ resource "aws_security_group" "emergency_sg" {
     Environment = "Prod"
   }
 }
-
 resource "aws_instance" "plan_b" {
-  ami                    = data.aws_ami.ubuntu.id
-  instance_type          = "t3.small"
+  ami                    = data.aws_ami.ubuntu_graviton.id
+  instance_type          = "t4g.medium"
   key_name               = "hackaton-bryan"
-  subnet_id              = data.aws_subnets.default.ids[0]
-  vpc_security_group_ids = [aws_security_group.emergency_sg.id]
+  subnet_id              = "subnet-069957f10d79dadd6"
+  vpc_security_group_ids = ["sg-0bced8ffa045a5674"]
 
   tags = {
     Name = "PLAN-B-EMERGENCY"
