@@ -73,7 +73,7 @@ module "ecs" {
   target_group_csharp_arn  = module.alb.target_group_csharp_arn
   target_group_flutter_arn = module.alb.target_group_flutter_arn
   
-  db_host     = var.db_host
+  db_host      = module.rds.db_host
   db_name     = var.db_name
   db_username = var.db_username
   db_password = var.db_password

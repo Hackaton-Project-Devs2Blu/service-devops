@@ -53,10 +53,10 @@ resource "aws_ecs_task_definition" "java" {
     name         = "java-container"
     image        = "${var.ecr_repo_urls["service-java"]}:latest"
     environment = [
-        { name = "TF_DB_HOST", value = var.db_host }, 
-        { name = "TF_DB_NAME",     value = var.db_name },
-        { name = "TF_DB_USERNAME",     value = var.db_username },
-        { name = "TF_DB_PASSWORD", value = var.db_password } 
+        { name = "DB_HOST",     value = var.db_host }, 
+        { name = "DB_NAME",     value = var.db_name },
+        { name = "DB_USER",     value = var.db_username },
+        { name = "DB_PASSWORD", value = var.db_password }
       ]
     essential    = true
     portMappings = [{ containerPort = 8080, hostPort = 8080 }]
@@ -161,10 +161,10 @@ resource "aws_ecs_task_definition" "csharp" {
     name         = "csharp-container"
     image        = "${var.ecr_repo_urls["service-csharp"]}:latest"
     environment = [
-        { name = "TF_DB_HOST", value = var.db_host }, 
-        { name = "TF_DB_NAME",     value = var.db_name },
-        { name = "TF_DB_USERNAME",     value = var.db_username },
-        { name = "TF_DB_PASSWORD", value = var.db_password }, 
+        { name = "DB_HOST",     value = var.db_host }, 
+        { name = "DB_NAME",     value = var.db_name },
+        { name = "DB_USER",     value = var.db_username },
+        { name = "DB_PASSWORD", value = var.db_password }, 
         { name = "GEMINI_API_KEY", value = var.gemini_api_key }
       ]
     essential    = true
