@@ -161,10 +161,10 @@ resource "aws_ecs_task_definition" "csharp" {
     name         = "csharp-container"
     image        = "${var.ecr_repo_urls["service-csharp"]}:latest"
     environment = [
-        { name = "TF_DB_HOST", value = var.db_host }, 
+        { name = "TF_DB_HOST", value = var.db_host },
         { name = "TF_DB_NAME",     value = var.db_name },
         { name = "TF_DB_USERNAME",     value = var.db_username },
-        { name = "TF_DB_PASSWORD", value = var.db_password }, 
+        { name = "TF_DB_PASSWORD", value = var.db_password },
         { name = "GEMINI_API_KEY", value = var.gemini_api_key }
       ]
     essential    = true
