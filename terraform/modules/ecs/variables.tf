@@ -44,3 +44,23 @@ variable "target_group_flutter_arn" {
   description = "ARN of the target group for Flutter services"
   type        = string
 }
+variable "db_host" {
+  description = "Database host"
+  sensitive = true
+  type        = string
+}
+variable "db_name" {
+  description = "Database name"
+  sensitive = true
+  type        = string
+}
+variable "db_username" {
+  description = "Database username"
+  sensitive = true
+  type        = string
+}
+variable "db_password" {
+  description = "Database password"
+  sensitive = true
+  type        = string
+}

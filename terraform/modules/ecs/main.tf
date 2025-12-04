@@ -52,6 +52,12 @@ resource "aws_ecs_task_definition" "java" {
   container_definitions = jsonencode([{
     name         = "java-container"
     image        = "${var.ecr_repo_urls["service-java"]}:latest"
+    environment = [
+        { name = "TF_DB_HOST", value = var.db_host }, 
+        { name = "TF_DB_NAME",     value = var.db_name },
+        { name = "TF_DB_USERNAME",     value = var.db_username },
+        { name = "TF_DB_PASSWORD", value = var.db_password } 
+      ]
     essential    = true
     portMappings = [{ containerPort = 8080, hostPort = 8080 }]
     logConfiguration = {
