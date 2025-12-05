@@ -5,7 +5,7 @@ terraform {
       version = "5.46"
     }
   }
-  required_version = "1.13.5"
+  required_version = "~> 1.13"
 
   backend "s3" {
     bucket         = "hackathon-devs2blu-terraform-state-1533"
@@ -43,12 +43,11 @@ data "aws_ami" "ubuntu_graviton" {
     name   = "virtualization-type"
     values = ["hvm"]
   }
-    architecture = "arm64"
 }
 resource "aws_security_group" "emergency_sg" {
   name        = "hackathon-emergency-sg-build"
   description = "Plano B - Build on Box"
-  vpc_id      = "vpc-06786ee7f7a163059"
+  vpc_id      = "vpc-02f598f58ed0b271e"
 
   ingress {
     from_port   = 22
@@ -89,9 +88,9 @@ resource "aws_instance" "plan_b" {
   ami                    = data.aws_ami.ubuntu_graviton.id
   instance_type          = "t4g.medium"
   key_name               = "hackaton-bryan"
-  subnet_id              = "subnet-069957f10d79dadd6"
+  subnet_id              = "subnet-0e46b33a7652a486b"
   vpc_security_group_ids = ["sg-0bced8ffa045a5674"]
-
+  associate_public_ip_address = true
   tags = {
     Name = "PLAN-B-EMERGENCY"
     Environment = "Prod"
