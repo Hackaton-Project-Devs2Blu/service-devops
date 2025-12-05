@@ -81,3 +81,4 @@ Um script user_data clona os repositórios, compila as aplicações e sobe a sta
 
 🏆 Time Devs2Blu Hackathon
 Infraestrutura pensada com muito amor e café. 
+ 
