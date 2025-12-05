@@ -11,7 +11,7 @@ terraform {
     bucket         = "hackathon-devs2blu-terraform-state-1533"
     key            = "hackathon/terraform.tfstate"
     region         = "us-west-2"
-    dynamodb_table = "hackathon-terraform-locks"
+    dynamodb_table = "Hackathon-terraform-locks"
     encrypt        = true
   }
 }
