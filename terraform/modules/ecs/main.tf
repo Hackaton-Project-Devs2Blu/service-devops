@@ -56,7 +56,8 @@ resource "aws_ecs_task_definition" "java" {
         { name = "DB_HOST",     value = var.db_host }, 
         { name = "DB_NAME",     value = var.db_name },
         { name = "DB_USER",     value = var.db_username },
-        { name = "DB_PASSWORD", value = var.db_password }
+        { name = "DB_PASSWORD", value = var.db_password },
+        { name = "SPRING_AUTOCONFIGURE_EXCLUDE", value = "org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration" }
       ]
     essential    = true
     portMappings = [{ containerPort = 8080, hostPort = 8080 }]
