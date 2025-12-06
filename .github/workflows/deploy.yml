@@ -52,7 +52,7 @@ jobs:
       - name: ⏰ Wake Up Services (Scale to 1)
         run: |
           echo "Acordando a infraestrutura..."
-          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service service-java --desired-count 1
-          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service service-csharp --desired-count 1
-          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service app-flutter --desired-count 1
+          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service service-java --desired-count 5
+          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service service-csharp --desired-count 5
+          aws ecs update-service --cluster ${{ env.CLUSTER_NAME }} --service app-flutter --desired-count 5
           echo "Serviços iniciados! Aguarde uns minutos para o Health Check passar."
