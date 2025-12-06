@@ -80,7 +80,7 @@ resource "aws_ecs_service" "java" {
   name            = "service-java"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.java.arn
-  desired_count   = 1
+  desired_count   = 5
   
   capacity_provider_strategy {
     base              = 0
@@ -116,8 +116,8 @@ resource "aws_ecs_service" "java" {
 }
 
 resource "aws_appautoscaling_target" "java_target" {
-  max_capacity       = 5  
-  min_capacity       = 1  
+  max_capacity       = 10  
+  min_capacity       = 5  
   resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.java.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
@@ -189,7 +189,7 @@ resource "aws_ecs_service" "csharp" {
   name            = "service-csharp"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.csharp.arn
-  desired_count   = 1
+  desired_count   = 5
 
   capacity_provider_strategy {
     base              = 0
@@ -225,8 +225,8 @@ resource "aws_ecs_service" "csharp" {
 }
 
 resource "aws_appautoscaling_target" "csharp_target" {
-  max_capacity       = 5  
-  min_capacity       = 1  
+  max_capacity       = 10  
+  min_capacity       = 5  
   resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.csharp.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
@@ -289,7 +289,7 @@ resource "aws_ecs_service" "flutter" {
   name            = "app-flutter"
   cluster         = aws_ecs_cluster.main.id
   task_definition = aws_ecs_task_definition.flutter.arn
-  desired_count   = 1
+  desired_count   = 5
 
   capacity_provider_strategy {
     base              = 0
@@ -325,8 +325,8 @@ resource "aws_ecs_service" "flutter" {
 }
 
 resource "aws_appautoscaling_target" "flutter_target" {
-  max_capacity       = 5  
-  min_capacity       = 1  
+  max_capacity       = 10  
+  min_capacity       = 5  
   resource_id        = "service/${aws_ecs_cluster.main.name}/${aws_ecs_service.flutter.name}"
   scalable_dimension = "ecs:service:DesiredCount"
   service_namespace  = "ecs"
