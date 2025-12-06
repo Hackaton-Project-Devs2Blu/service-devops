@@ -1,0 +1,38 @@
+name: 🧨 Terraform Destroy (NUKE)
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirmation:
+        description: 'ATENÇÃO: Digite "DESTRUIR" para confirmar a exclusão total.'
+        required: true
+        default: ''
+
+jobs:
+  destroy-infra:
+    name: Destroy Infrastructure
+    runs-on: ubuntu-latest
+    # Só roda se o usuário digitou a palavra mágica
+    if: github.event.inputs.confirmation == 'DESTRUIR'
+    
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      AWS_REGION: 'us-west-2' # Ajuste para sua região se for outra
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      - name: Terraform Init
+        run: terraform init
+
+      # Opcional: Mostra o que vai ser deletado antes
+      # - name: Terraform Plan Destroy
+      #   run: terraform plan -destroy
+
+      - name: 💀 Terraform Destroy
+        run: terraform destroy -auto-approve
