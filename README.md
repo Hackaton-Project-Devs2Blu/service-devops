@@ -1,7 +1,3 @@
-Aqui está o arquivo README completo e unificado, pronto para ser copiado para o seu repositório service-devops:
-
-Markdown
-
 # ⚙️ Engenharia de DevOps, FinOps & SRE - Projeto Patricia
 
 ![AWS](https://img.shields.io/badge/Cloud-AWS-orange)
